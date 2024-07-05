@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            width: 400px;
+            text-align: center;
+        }
+
+        select,
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Sign Up</h2>
+        <form action="signup.php" method="POST" onsubmit="return validateForm()">
+            <label for="role">Select Role</label><br>
+            <select id="role" name="role">
+                <option value="student">Student</option>
+                <option value="tutor">Tutor</option>
+            </select><br><br>
+            <input type="text" name="name" placeholder="Your Name" required><br>
+            <input type="email" name="email" placeholder="Your Email" required><br>
+            <input type="password" name="password" id="password" placeholder="Password" required><br>
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required><br>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+        <div id="error-message" class="error-message"></div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password.length < 6) {
+                showError("Password must be at least 6 characters long");
+                return false;
+            }
+            if (!password.match(/[A-Z]/)) {
+                showError("Password must contain at least one uppercase letter");
+                return false;
+            }
+            if (!password.match(/[a-z]/)) {
+                showError("Password must contain at least one lowercase letter");
+                return false;
+            }
+            if (!password.match(/[0-9]/)) {
+                showError("Password must contain at least one number");
+                return false;
+            }
+            if (!password.match(/[^A-Za-z0-9]/)) {
+                showError("Password must contain at least one special character");
+                return false;
+            }
+            if (password !== confirmPassword) {
+                showError("Passwords do not match");
+                return false;
+            }
+            return true;
+        }
+
+        function showError(message) {
+            var errorMessageElement = document.getElementById("error-message");
+            errorMessageElement.innerText = message;
+        }
+    </script>
+</body>
+</html>
